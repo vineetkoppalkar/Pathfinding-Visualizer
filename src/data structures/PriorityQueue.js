@@ -50,3 +50,5 @@ class PriorityQueue {
     return this.items.length === 0;
   }
 }
+
+export default PriorityQueue;

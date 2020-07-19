@@ -1,3 +1,4 @@
+import PriorityQueue from "../data structures/PriorityQueue";
 import { CELL_STATUS } from "../constants/cellStatus";
 
 const algorithmA = (
@@ -7,15 +8,16 @@ const algorithmA = (
   updateCellStatus
 ) => {
   // Create open list priority queue
+  const openList = new PriorityQueue();
+
   // Create closed map
-  //
-  //
-  // Make starting cell into a node (new Node())
+  const closedMap = {};
+
+  // Make starting cell into a node (new CellNode())
   //  init(row, col)
   //  set actual cost to 0 (i.e. G(start cell) = 0)
-  //  set prioity to 0
   //  set previous to null
-  // Add starting node into open list
+  // Add starting node into open list with priority 0
   //
   //
   // Create variable for currentNode
@@ -23,13 +25,13 @@ const algorithmA = (
   //  dequeue node with lowest priority and assign to currentNode
   //  add currentNode into closed map
   //  Loop over cells adjacent to currentNode (Top, right, bottom, left)
-  //    ignore adjacent cells that are off-grid, walls or nodes in the closed map
+  //    Ignore adjacent cells that are off-grid, walls or nodes in the closed map
   //    Create the adjacent node
   //      init(row, col)
-  //      set priority using F(n) = G(n) + H(n)
-  //        G(n) = G(currentNode) + 1
-  //        H(n) = Manhattan distance from n to end cell
   //      set prev node as currentNode
+  //    Calculate priority using F(n) = G(n) + H(n)
+  //      G(n) = G(currentNode) + 1
+  //      H(n) = Manhattan distance from n to end cell
   //    add adjacent node into prority queue
   //
   //
