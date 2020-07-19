@@ -5,6 +5,32 @@
   border: 1px solid lightblue;
 
   &:hover {
+    border-color: rgb(154, 184, 212);
     background-color: rgb(195, 226, 255);
+  }
+
+  &--start {
+    border-color: rgb(2, 170, 10);
+    background-color: rgb(18, 218, 28);
+  }
+
+  &--end {
+    border-color: rgb(185, 13, 13);
+    background-color: rgb(228, 3, 3);
+  }
+
+  &--checking {
+    border-color: rgb(184, 187, 3);
+    background-color: rgb(251, 255, 15);
+  }
+
+  &--visited {
+    border-color: rgb(97, 196, 230);
+    background-color: rgb(137, 255, 255);
+  }
+
+  &--wall {
+    border-color: rgb(55, 55, 55);
+    background-color: rgb(88, 88, 88);
   }
 }

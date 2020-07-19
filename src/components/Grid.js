@@ -24,11 +24,9 @@ const Grid = ({ numOfRows, numOfCols }) => {
 
   return (
     <div className="grid">
-      {/* <Cell /> */}
-
       {gridCells.map((row, rowIndex) => (
         <div key={rowIndex} className="grid-row">
-          {row.map((cell, colIndex) => (
+          {row.map((_, colIndex) => (
             <Cell key={`${(rowIndex, colIndex)}`} />
           ))}
         </div>
