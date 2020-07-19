@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Grid from "./Grid";
 import GridToolbar from "./GridToolbar";
+import algorithmA from "../algorithms/algorithmA";
 import { GRID_STATUS } from "../constants/gridStatus";
 import { CELL_STATUS } from "../constants/cellStatus";
 
@@ -168,6 +169,7 @@ const GridWrapper = ({ numOfRows, numOfCols }) => {
 
   const handleOnStart = () => {
     console.log("START PATHFINDING!");
+    algorithmA(gridCells, startCellCoords, endCellCoords, updateCellStatus);
   };
 
   return (
