@@ -1,0 +1,7 @@
+export const CELL_STATUS = {
+  START: "START",
+  END: "END",
+  CHECKING: "CHECKING",
+  VISITED: "VISITED",
+  WALL: "WALL",
+};
