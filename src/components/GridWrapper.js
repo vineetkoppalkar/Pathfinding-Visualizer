@@ -55,6 +55,7 @@ const GridWrapper = ({ numOfRows, numOfCols }) => {
     numOfCols - Math.round(numOfCols / 6),
   ]);
   const [wallCoords, setWallCoords] = useState([]);
+  const [isReadyToStart, setIsReadyToStart] = useState(true);
 
   useEffect(() => {
     const cells = generateCells(
@@ -65,31 +66,78 @@ const GridWrapper = ({ numOfRows, numOfCols }) => {
       wallCoords
     );
     setGridCells(cells);
-  }, [startCellCoords, endCellCoords, wallCoords]);
+  }, []);
+
+  useEffect(() => {
+    if (startCellCoords.length === 0 || endCellCoords.length === 0) {
+      setIsReadyToStart(false);
+    } else {
+      setIsReadyToStart(true);
+    }
+  }, [startCellCoords, endCellCoords]);
+
+  const updateCellStatus = (cellRowIndex, cellColIndex, newCellStatus) => {
+    setGridCells((prevGridCells) => {
+      const newGridCells = JSON.parse(JSON.stringify(prevGridCells));
+      newGridCells[cellRowIndex][cellColIndex] = newCellStatus;
+      return newGridCells;
+    });
+  };
+
+  const setNewStartCoords = (newStartRowIndex, newStartColIndex) => {
+    if (startCellCoords.length !== 0) {
+      const [prevStartRowIndex, prevStartColIndex] = startCellCoords;
+      updateCellStatus(
+        prevStartRowIndex,
+        prevStartColIndex,
+        CELL_STATUS.UNVISITED
+      );
+    }
+    setStartCellCoords([newStartRowIndex, newStartColIndex]);
+    updateCellStatus(newStartRowIndex, newStartColIndex, CELL_STATUS.START);
+  };
+
+  const setNewEndCoords = (newEndRowIndex, newEndColIndex) => {
+    if (endCellCoords.length !== 0) {
+      const [prevEndRowIndex, prevEndColIndex] = endCellCoords;
+      updateCellStatus(prevEndRowIndex, prevEndColIndex, CELL_STATUS.UNVISITED);
+    }
+
+    setEndCellCoords([newEndRowIndex, newEndColIndex]);
+    updateCellStatus(newEndRowIndex, newEndColIndex, CELL_STATUS.END);
+  };
+
+  const removeExisitingWall = (cellRowIndex, cellColIndex) => {
+    updateCellStatus(cellRowIndex, cellColIndex, CELL_STATUS.UNVISITED);
+    const newWallCoords = wallCoords.filter((wallCoord) => {
+      const [wallRowIndex, wallColIndex] = wallCoord;
+      return wallRowIndex !== cellRowIndex || wallColIndex !== cellColIndex;
+    });
+    setWallCoords(newWallCoords);
+  };
+
+  const addNewWall = (newWallRowIndex, newWallColIndex) => {
+    setWallCoords([...wallCoords, [newWallRowIndex, newWallColIndex]]);
+    updateCellStatus(newWallRowIndex, newWallColIndex, CELL_STATUS.WALL);
+  };
 
   const handleOnCellClick = (cellStatus, cellRowIndex, cellColIndex) => {
     switch (gridStatus) {
       case GRID_STATUS.SET_START:
         if (cellStatus === CELL_STATUS.UNVISITED) {
-          setStartCellCoords([cellRowIndex, cellColIndex]);
+          setNewStartCoords(cellRowIndex, cellColIndex);
         }
         break;
       case GRID_STATUS.SET_END:
         if (cellStatus === CELL_STATUS.UNVISITED) {
-          setEndCellCoords([cellRowIndex, cellColIndex]);
+          setNewEndCoords(cellRowIndex, cellColIndex);
         }
         break;
       case GRID_STATUS.SET_WALL:
         if (cellStatus === CELL_STATUS.WALL) {
-          const newWallCoords = wallCoords.filter((wallCoord) => {
-            const [wallRowIndex, wallColIndex] = wallCoord;
-            return (
-              wallRowIndex !== cellRowIndex || wallColIndex !== cellColIndex
-            );
-          });
-          setWallCoords(newWallCoords);
+          removeExisitingWall(cellRowIndex, cellColIndex);
         } else if (cellStatus === CELL_STATUS.UNVISITED) {
-          setWallCoords([...wallCoords, [cellRowIndex, cellColIndex]]);
+          addNewWall(cellRowIndex, cellColIndex);
         }
         break;
       default:
@@ -98,10 +146,11 @@ const GridWrapper = ({ numOfRows, numOfCols }) => {
   };
 
   const handleGridStatusChange = (_, status) => {
-    setGridStatus(status);
     if (status === GRID_STATUS.CLEAR_GRID) {
       clearGrid();
       setGridStatus(GRID_STATUS.DEFAULT);
+    } else {
+      setGridStatus(status);
     }
   };
 
@@ -109,6 +158,16 @@ const GridWrapper = ({ numOfRows, numOfCols }) => {
     setStartCellCoords([]);
     setEndCellCoords([]);
     setWallCoords([]);
+
+    for (let row = 0; row < numOfRows; row++) {
+      for (let col = 0; col < numOfCols; col++) {
+        updateCellStatus(row, col, CELL_STATUS.UNVISITED);
+      }
+    }
+  };
+
+  const handleOnStart = () => {
+    console.log("START PATHFINDING!");
   };
 
   return (
@@ -116,6 +175,8 @@ const GridWrapper = ({ numOfRows, numOfCols }) => {
       <GridToolbar
         gridStatus={gridStatus}
         onGridStatusChange={handleGridStatusChange}
+        onStart={handleOnStart}
+        isReadyToStart={isReadyToStart}
       />
       <Grid gridCells={gridCells} handleOnCellClick={handleOnCellClick} />
     </div>
