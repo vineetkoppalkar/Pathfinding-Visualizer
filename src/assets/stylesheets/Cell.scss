@@ -14,9 +14,19 @@
     background-color: rgb(18, 218, 28);
   }
 
+  &--start:hover {
+    border-color: rgb(2, 170, 10);
+    background-color: rgb(9, 129, 15);
+  }
+
   &--end {
     border-color: rgb(185, 13, 13);
     background-color: rgb(228, 3, 3);
+  }
+
+  &--end:hover {
+    border-color: rgb(185, 13, 13);
+    background-color: rgb(167, 3, 3);
   }
 
   &--checking {
@@ -24,13 +34,28 @@
     background-color: rgb(251, 255, 15);
   }
 
+  &--checking:hover {
+    border-color: rgb(184, 187, 3);
+    background-color: rgb(167, 170, 12);
+  }
+
   &--visited {
     border-color: rgb(97, 196, 230);
     background-color: rgb(137, 255, 255);
   }
 
+  &--visited:hover {
+    border-color: rgb(97, 196, 230);
+    background-color: rgb(87, 165, 165);
+  }
+
   &--wall {
     border-color: rgb(55, 55, 55);
     background-color: rgb(88, 88, 88);
+  }
+
+  &--wall:hover {
+    border-color: rgb(55, 55, 55);
+    background-color: rgb(58, 58, 58);
   }
 }
