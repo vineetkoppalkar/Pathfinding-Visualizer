@@ -1,0 +1,7 @@
+export const GRID_STATUS = {
+  DEFAULT: "DEFAULT",
+  SET_START: "SET_START",
+  SET_END: "SET_END",
+  SET_WALL: "SET_WALL",
+  CLEAR_GRID: "CLEAR_GRID",
+};

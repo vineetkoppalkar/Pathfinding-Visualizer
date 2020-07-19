@@ -20,12 +20,13 @@ const getCellStyle = (baseStyle, status) => {
   }
 };
 
-const Cell = ({ status }) => {
+const Cell = ({ status, rowIndex, colIndex, handleOnCellClick }) => {
   const BASE_CELL_STYLE = "cell";
 
   return (
     <div
       className={`${BASE_CELL_STYLE} ${getCellStyle(BASE_CELL_STYLE, status)}`}
+      onClick={() => handleOnCellClick(status, rowIndex, colIndex)}
     />
   );
 };
