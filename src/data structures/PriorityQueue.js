@@ -32,7 +32,7 @@ class PriorityQueue {
     return this.items.shift();
   }
 
-  fisrt() {
+  first() {
     if (this.isEmpty()) {
       return null;
     }
