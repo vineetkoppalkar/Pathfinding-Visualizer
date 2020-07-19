@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cell from "./Cell";
+import { CELL_STATUS } from "../constants/cellStatus";
+
 import "../assets/stylesheets/Grid.scss";
 
 const generateCells = (numOfRows, numOfCols) => {
@@ -7,7 +9,7 @@ const generateCells = (numOfRows, numOfCols) => {
   for (let row = 0; row < numOfRows; row++) {
     const currentRow = [];
     for (let col = 0; col < numOfCols; col++) {
-      currentRow.push([]);
+      currentRow.push(CELL_STATUS.UNVISITED);
     }
     cells.push(currentRow);
   }
@@ -26,8 +28,8 @@ const Grid = ({ numOfRows, numOfCols }) => {
     <div className="grid">
       {gridCells.map((row, rowIndex) => (
         <div key={rowIndex} className="grid-row">
-          {row.map((_, colIndex) => (
-            <Cell key={`${(rowIndex, colIndex)}`} />
+          {row.map((cellStatus, colIndex) => (
+            <Cell key={`${(rowIndex, colIndex)}`} status={cellStatus} />
           ))}
         </div>
       ))}

@@ -3,8 +3,7 @@ import { CELL_STATUS } from "../constants/cellStatus";
 
 import "../assets/stylesheets/Cell.scss";
 
-const getCellStyle = (status) => {
-  const baseStyle = "cell";
+const getCellStyle = (baseStyle, status) => {
   switch (status) {
     case CELL_STATUS.START:
       return `${baseStyle}--start`;
@@ -17,12 +16,18 @@ const getCellStyle = (status) => {
     case CELL_STATUS.WALL:
       return `${baseStyle}--wall`;
     default:
-      return baseStyle;
+      return "";
   }
 };
 
 const Cell = ({ status }) => {
-  return <div className={getCellStyle(status)} />;
+  const BASE_CELL_STYLE = "cell";
+
+  return (
+    <div
+      className={`${BASE_CELL_STYLE} ${getCellStyle(BASE_CELL_STYLE, status)}`}
+    />
+  );
 };
 
 export default Cell;

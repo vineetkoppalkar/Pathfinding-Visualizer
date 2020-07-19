@@ -7,6 +7,7 @@ const PathfindingVisualizer = () => {
 
   return (
     <div>
+      <h1>Pathfinding Visualizer</h1>
       <Grid numOfRows={numOfRows} numOfCols={numOfCols} />
     </div>
   );

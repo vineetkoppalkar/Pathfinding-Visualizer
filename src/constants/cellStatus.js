@@ -1,4 +1,5 @@
 export const CELL_STATUS = {
+  UNVISITED: "UNVISITED",
   START: "START",
   END: "END",
   CHECKING: "CHECKING",
