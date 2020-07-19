@@ -5,7 +5,7 @@ import { GRID_STATUS } from "../constants/gridStatus";
 
 import "../assets/stylesheets/GridToolbar.scss";
 
-const GridWrapper = ({ gridStatus, onGridStatusChange }) => {
+const GridWrapper = ({ gridStatus, onGridStatusChange, onGridClear }) => {
   return (
     <div className="grid-toolbar">
       <ToggleButtonGroup

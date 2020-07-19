@@ -3,6 +3,8 @@ import { CELL_STATUS } from "../constants/cellStatus";
 
 import "../assets/stylesheets/Cell.scss";
 
+const BASE_CELL_STYLE = "cell";
+
 const getCellStyle = (baseStyle, status) => {
   switch (status) {
     case CELL_STATUS.START:
@@ -21,8 +23,6 @@ const getCellStyle = (baseStyle, status) => {
 };
 
 const Cell = ({ status, rowIndex, colIndex, handleOnCellClick }) => {
-  const BASE_CELL_STYLE = "cell";
-
   return (
     <div
       className={`${BASE_CELL_STYLE} ${getCellStyle(BASE_CELL_STYLE, status)}`}
