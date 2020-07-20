@@ -5,4 +5,5 @@ export const CELL_STATUS = {
   CHECKING: "CHECKING",
   VISITED: "VISITED",
   WALL: "WALL",
+  PATH: "PATH",
 };

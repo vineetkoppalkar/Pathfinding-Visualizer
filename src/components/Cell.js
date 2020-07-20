@@ -17,6 +17,8 @@ const getCellStyle = (baseStyle, status) => {
       return `${baseStyle}--visited`;
     case CELL_STATUS.WALL:
       return `${baseStyle}--wall`;
+    case CELL_STATUS.PATH:
+      return `${baseStyle}--path`;
     default:
       return "";
   }
