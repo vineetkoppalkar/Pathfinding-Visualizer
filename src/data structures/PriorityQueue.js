@@ -49,6 +49,43 @@ class PriorityQueue {
   isEmpty() {
     return this.items.length === 0;
   }
+
+  contains(element) {
+    for (let i = 0; i < this.items.length; i++) {
+      const queuedElement = this.items[i].element;
+      if (queuedElement.equals(element)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getPriorityOf(element) {
+    for (let i = 0; i < this.items.length; i++) {
+      const queuedElement = this.items[i].element;
+      if (queuedElement.equals(element)) {
+        return this.items[i].priority;
+      }
+    }
+    return null;
+  }
+
+  remove(element) {
+    let queuedPriorityElement = null;
+    for (let i = 0; i < this.items.length; i++) {
+      const queuedElement = this.items[i].element;
+      if (queuedElement.equals(element)) {
+        queuedPriorityElement = queuedElement;
+      }
+    }
+
+    if (queuedPriorityElement === null) return;
+
+    const queuedPriorityElementIndex = this.items.indexOf(
+      queuedPriorityElement
+    );
+    this.items.splice(queuedPriorityElementIndex, 1);
+  }
 }
 
 export default PriorityQueue;
