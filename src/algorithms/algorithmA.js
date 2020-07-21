@@ -16,6 +16,8 @@ const algorithmA = (
   const closedMap = {};
 
   const [startRowIndex, startColIndex] = startCellCoords;
+  const [endRowIndex, endColIndex] = endCellCoords;
+
   const startingCellNode = new CellNode(
     startRowIndex,
     startColIndex,
@@ -65,12 +67,11 @@ const algorithmA = (
     adjacentNode.setPreviousNode(currentNode);
     adjacentNode.setActualCost(currentNode.actualCost + 1);
 
-    const [endCellRowIndex, endCellColIndex] = endCellCoords;
     const heuristicCost = getManhattanDistance(
       adjacentNode.rowIndex,
       adjacentNode.colIndex,
-      endCellRowIndex,
-      endCellColIndex
+      endRowIndex,
+      endColIndex
     );
 
     const adjacentNodePriority = adjacentNode.actualCost + heuristicCost;
@@ -105,10 +106,9 @@ const algorithmA = (
       CELL_STATUS.VISITED
     );
 
-    const [endCellRowIndex, endCellColIndex] = endCellCoords;
     if (
-      currentNode.rowIndex === endCellRowIndex &&
-      currentNode.colIndex === endCellColIndex
+      currentNode.rowIndex === endRowIndex &&
+      currentNode.colIndex === endColIndex
     ) {
       break;
     }
@@ -132,6 +132,14 @@ const algorithmA = (
     const leftCellRowIndex = currentNode.rowIndex;
     const leftCellColIndex = currentNode.colIndex - 1;
     addAdjacentCellNode(currentNode, leftCellRowIndex, leftCellColIndex);
+  }
+
+  if (
+    currentNode.rowIndex !== endRowIndex &&
+    currentNode.colIndex !== endColIndex
+  ) {
+    updateCellStatus(startRowIndex, startColIndex, CELL_STATUS.START);
+    return;
   }
 
   const shortestPath = [];

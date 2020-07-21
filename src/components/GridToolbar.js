@@ -29,6 +29,9 @@ const GridWrapper = ({
         <ToggleButton value={GRID_STATUS.SET_WALL} aria-label="Set wall">
           Set wall
         </ToggleButton>
+        <ToggleButton value={GRID_STATUS.RANDOMIZE} aria-label="Randomize grid">
+          Randomize
+        </ToggleButton>
         <ToggleButton value={GRID_STATUS.RESET_GRID} aria-label="Reset grid">
           Reset grid
         </ToggleButton>

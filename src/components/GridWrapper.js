@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Grid from "./Grid";
 import GridToolbar from "./GridToolbar";
+import { getRandomInt } from "../algorithms/helper";
 import { GRID_STATUS } from "../constants/gridStatus";
 import { CELL_STATUS } from "../constants/cellStatus";
 
@@ -155,6 +156,10 @@ const GridWrapper = ({ numOfRows, numOfCols, pathfindingAlgorithm }) => {
         resetGrid();
         setGridStatus(GRID_STATUS.DEFAULT);
         break;
+      case GRID_STATUS.RANDOMIZE:
+        randomizeGrid();
+        setGridStatus(GRID_STATUS.DEFAULT);
+        break;
       default:
         setGridStatus(status);
         break;
@@ -186,6 +191,42 @@ const GridWrapper = ({ numOfRows, numOfCols, pathfindingAlgorithm }) => {
         }
         updateCellStatus(row, col, CELL_STATUS.UNVISITED);
       }
+    }
+  };
+
+  const randomizeGrid = () => {
+    clearGrid();
+    const randomStartRowIndex = getRandomInt(0, numOfRows);
+    const randomStartColIndex = getRandomInt(0, numOfCols);
+    setNewStartCoords(randomStartRowIndex, randomStartColIndex);
+
+    let randomEndRowIndex = getRandomInt(0, numOfRows);
+    let randomEndColIndex = getRandomInt(0, numOfCols);
+    while (
+      randomStartRowIndex === randomEndRowIndex &&
+      randomStartColIndex === randomEndColIndex
+    ) {
+      randomEndRowIndex = getRandomInt(0, numOfRows);
+      randomEndColIndex = getRandomInt(0, numOfCols);
+    }
+
+    setNewEndCoords(randomEndRowIndex, randomEndColIndex);
+
+    const numOfWalls = getRandomInt(0, Math.floor((numOfRows * numOfCols) / 2));
+    for (let i = 0; i < numOfWalls; i++) {
+      let randomWallRowIndex = getRandomInt(0, numOfRows);
+      let randomWallColIndex = getRandomInt(0, numOfCols);
+
+      while (
+        (randomWallRowIndex === randomStartRowIndex &&
+          randomWallColIndex === randomStartColIndex) ||
+        (randomWallRowIndex === randomEndRowIndex &&
+          randomWallColIndex === randomEndColIndex)
+      ) {
+        randomWallRowIndex = getRandomInt(0, numOfRows);
+        randomWallColIndex = getRandomInt(0, numOfCols);
+      }
+      addNewWall(randomWallRowIndex, randomWallColIndex);
     }
   };
 
