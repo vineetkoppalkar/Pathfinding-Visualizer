@@ -8,7 +8,6 @@ const PathfindingVisualizer = () => {
 
   return (
     <div>
-      <h1>Pathfinding Visualizer</h1>
       <GridWrapper
         numOfRows={numOfRows}
         numOfCols={numOfCols}

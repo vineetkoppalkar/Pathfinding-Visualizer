@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Paper from "@material-ui/core/Paper";
 import Grid from "./Grid";
 import GridToolbar from "./GridToolbar";
 import { getRandomInt } from "../algorithms/helper";
 import { GRID_STATUS } from "../constants/gridStatus";
 import { CELL_STATUS } from "../constants/cellStatus";
+import "../assets/stylesheets/GridWrapper.scss";
 
 const isAWall = (row, col, wallCoords) => {
   for (let i = 0; i < wallCoords.length; i++) {
@@ -122,22 +124,33 @@ const GridWrapper = ({ numOfRows, numOfCols, pathfindingAlgorithm }) => {
     updateCellStatus(newWallRowIndex, newWallColIndex, CELL_STATUS.WALL);
   };
 
+  const isARelevantPathCell = (cellStatus) => {
+    return (
+      cellStatus === CELL_STATUS.START ||
+      cellStatus === CELL_STATUS.END ||
+      cellStatus === CELL_STATUS.WALL
+    );
+  };
+
   const handleOnCellClick = (cellStatus, cellRowIndex, cellColIndex) => {
     switch (gridStatus) {
       case GRID_STATUS.SET_START:
-        if (cellStatus === CELL_STATUS.UNVISITED) {
+        if (!isARelevantPathCell(cellStatus)) {
+          resetGrid();
           setNewStartCoords(cellRowIndex, cellColIndex);
         }
         break;
       case GRID_STATUS.SET_END:
-        if (cellStatus === CELL_STATUS.UNVISITED) {
+        if (!isARelevantPathCell(cellStatus)) {
+          resetGrid();
           setNewEndCoords(cellRowIndex, cellColIndex);
         }
         break;
       case GRID_STATUS.SET_WALL:
+        resetGrid();
         if (cellStatus === CELL_STATUS.WALL) {
           removeExisitingWall(cellRowIndex, cellColIndex);
-        } else if (cellStatus === CELL_STATUS.UNVISITED) {
+        } else if (!isARelevantPathCell(cellStatus)) {
           addNewWall(cellRowIndex, cellColIndex);
         }
         break;
@@ -231,6 +244,7 @@ const GridWrapper = ({ numOfRows, numOfCols, pathfindingAlgorithm }) => {
   };
 
   const handleOnStart = () => {
+    resetGrid();
     pathfindingAlgorithm(
       gridCells,
       startCellCoords,
@@ -241,12 +255,14 @@ const GridWrapper = ({ numOfRows, numOfCols, pathfindingAlgorithm }) => {
 
   return (
     <div>
-      <GridToolbar
-        gridStatus={gridStatus}
-        onGridStatusChange={handleGridStatusChange}
-        onStart={handleOnStart}
-        isReadyToStart={isReadyToStart}
-      />
+      <Paper className="grid-toolbar-wrapper">
+        <GridToolbar
+          gridStatus={gridStatus}
+          onGridStatusChange={handleGridStatusChange}
+          onStart={handleOnStart}
+          isReadyToStart={isReadyToStart}
+        />
+      </Paper>
       <Grid gridCells={gridCells} handleOnCellClick={handleOnCellClick} />
     </div>
   );
