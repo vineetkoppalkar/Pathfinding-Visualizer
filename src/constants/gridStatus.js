@@ -4,4 +4,5 @@ export const GRID_STATUS = {
   SET_END: "SET_END",
   SET_WALL: "SET_WALL",
   CLEAR_GRID: "CLEAR_GRID",
+  RESET_GRID: "RESET_GRID",
 };

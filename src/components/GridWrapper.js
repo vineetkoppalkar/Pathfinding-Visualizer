@@ -146,11 +146,18 @@ const GridWrapper = ({ numOfRows, numOfCols, pathfindingAlgorithm }) => {
   };
 
   const handleGridStatusChange = (_, status) => {
-    if (status === GRID_STATUS.CLEAR_GRID) {
-      clearGrid();
-      setGridStatus(GRID_STATUS.DEFAULT);
-    } else {
-      setGridStatus(status);
+    switch (status) {
+      case GRID_STATUS.CLEAR_GRID:
+        clearGrid();
+        setGridStatus(GRID_STATUS.DEFAULT);
+        break;
+      case GRID_STATUS.RESET_GRID:
+        resetGrid();
+        setGridStatus(GRID_STATUS.DEFAULT);
+        break;
+      default:
+        setGridStatus(status);
+        break;
     }
   };
 
@@ -161,6 +168,22 @@ const GridWrapper = ({ numOfRows, numOfCols, pathfindingAlgorithm }) => {
 
     for (let row = 0; row < numOfRows; row++) {
       for (let col = 0; col < numOfCols; col++) {
+        updateCellStatus(row, col, CELL_STATUS.UNVISITED);
+      }
+    }
+  };
+
+  const resetGrid = () => {
+    for (let row = 0; row < numOfRows; row++) {
+      for (let col = 0; col < numOfCols; col++) {
+        const cellStatus = gridCells[row][col];
+        if (
+          cellStatus === CELL_STATUS.START ||
+          cellStatus === CELL_STATUS.END ||
+          cellStatus === CELL_STATUS.WALL
+        ) {
+          continue;
+        }
         updateCellStatus(row, col, CELL_STATUS.UNVISITED);
       }
     }
